@@ -1,5 +1,8 @@
 # kickstart.nvim
 
+> [!IMPORTANT]
+> kickstart is by default setup for golang, here is the repo I use to add python changes from: https://github.com/SamPosh/PyDevbox
+
 ## Introduction
 
 A starting point for Neovim that is:
