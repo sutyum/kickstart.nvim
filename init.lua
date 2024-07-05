@@ -121,6 +121,9 @@ vim.opt.breakindent = true
 -- Save undo history
 vim.opt.undofile = true
 
+vim.opt.encoding = 'utf-8'
+vim.opt.fileencoding = 'utf-8'
+
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
@@ -145,6 +148,14 @@ vim.opt.splitbelow = true
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
+-- ~/.config/nvim/init.lua or ~/.config/nvim/lua/config/init.lua
+
+-- Set tab to 2 spaces
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2
+vim.opt.expandtab = true
+
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
 
@@ -160,6 +171,9 @@ vim.opt.scrolloff = 10
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+-- set gp=git\ grep\ -n
+vim.o.grepprg = 'git grep -n'
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
@@ -250,6 +264,20 @@ require('lazy').setup({
     },
   },
 
+  -- {
+  --   'jackMort/ChatGPT.nvim',
+  --   event = 'VeryLazy',
+  --   config = function()
+  --     require('chatgpt').setup()
+  --   end,
+  --   dependencies = {
+  --     'MunifTanjim/nui.nvim',
+  --     'nvim-lua/plenary.nvim',
+  --     'folke/trouble.nvim',
+  --     'nvim-telescope/telescope.nvim',
+  --   },
+  -- },
+
   -- dap helpers
   {
     'theHamsta/nvim-dap-virtual-text',
@@ -308,6 +336,10 @@ require('lazy').setup({
         ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
       }
     end,
+  },
+
+  {
+    'github/copilot.vim',
   },
 
   -- NOTE: Plugins can specify dependencies.
@@ -558,7 +590,9 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        clangd = {},
+        clangd = {
+          cmd = { 'clangd', '--offset_encoding=UTF-8' },
+        },
         -- gopls = {},
         pyright = {
           python = {
@@ -859,7 +893,7 @@ require('lazy').setup({
   --
   require 'kickstart.plugins.debug',
   require 'kickstart.plugins.indent_line',
-  require 'kickstart.plugins.lint',
+  -- require 'kickstart.plugins.lint',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
