@@ -428,6 +428,7 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+      vim.keymap.set('n', '<leader>sm', builtin.man_pages, { desc = '[S]earch [M]an Pages' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -590,9 +591,6 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        clangd = {
-          cmd = { 'clangd', '--offset_encoding=UTF-8' },
-        },
         -- gopls = {},
         pyright = {
           python = {
@@ -613,6 +611,55 @@ require('lazy').setup({
         -- But for many setups, the LSP (`tsserver`) will work just fine
         tsserver = {},
         --
+
+        -- clangd = {
+        --   cmd = { 'clangd', '--offset_encoding=UTF-8' },
+        -- },
+
+        -- Ensure mason installs the server
+        clangd = {
+          keys = {
+            { '<leader>ch', '<cmd>ClangdSwitchSourceHeader<cr>', desc = 'Switch Source/Header (C/C++)' },
+          },
+          root_dir = function(fname)
+            return require('lspconfig.util').root_pattern(
+              'Makefile',
+              'configure.ac',
+              'configure.in',
+              'config.h.in',
+              'meson.build',
+              'meson_options.txt',
+              'build.ninja'
+            )(fname) or require('lspconfig.util').root_pattern('compile_commands.json', 'compile_flags.txt')(fname) or require('lspconfig.util').find_git_ancestor(
+              fname
+            )
+          end,
+          capabilities = {
+            offsetEncoding = { 'utf-16' },
+          },
+          cmd = {
+            'clangd',
+            '--background-index',
+            '--clang-tidy',
+            '--header-insertion=iwyu',
+            '--completion-style=detailed',
+            '--function-arg-placeholders',
+            '--fallback-style=llvm',
+          },
+          init_options = {
+            usePlaceholders = true,
+            completeUnimported = true,
+            clangdFileStatus = true,
+          },
+
+          setup = {
+            clangd = function(_, opts)
+              local clangd_ext_opts = LazyVim.opts 'clangd_extensions.nvim'
+              require('clangd_extensions').setup(vim.tbl_deep_extend('force', clangd_ext_opts or {}, { server = opts }))
+              return false
+            end,
+          },
+        },
 
         lua_ls = {
           -- cmd = {...},
@@ -855,7 +902,7 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'cpp', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
