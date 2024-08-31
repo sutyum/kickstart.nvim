@@ -1,5 +1,17 @@
 # kickstart.nvim
 
+Alongside setting up kickstart, you'll also need [enhancd](https://github.com/babarot/enhancd)
+
+```shell
+# rest of the .bashrc file
+
+...
+
+# Enhancd for better cd/directory jumping
+source $HOME/Installs/enhancd/init.sh
+export ENHANCD_FILTER="fzf --height 30%:fzy"
+```
+
 > [!IMPORTANT]
 > kickstart is by default setup for golang, here is the repo I use to add python changes from: https://github.com/SamPosh/PyDevbox
 
