@@ -1,6 +1,6 @@
 # kickstart.nvim
 
-Alongside setting up kickstart, you'll also need [enhancd](https://github.com/babarot/enhancd)
+1. Alongside setting up kickstart, you'll also need [enhancd](https://github.com/babarot/enhancd)
 
 ```shell
 # rest of the .bashrc file
@@ -11,6 +11,7 @@ Alongside setting up kickstart, you'll also need [enhancd](https://github.com/ba
 source $HOME/Installs/enhancd/init.sh
 export ENHANCD_FILTER="fzf --height 30%:fzy"
 ```
+2. Setup tmux: https://github.com/sutyum/tmux-kickstarter/tree/main
 
 > [!IMPORTANT]
 > kickstart is by default setup for golang, here is the repo I use to add python changes from: https://github.com/SamPosh/PyDevbox
