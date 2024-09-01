@@ -253,8 +253,6 @@ require('lazy').setup({
 
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
-  { "EdenEast/nightfox.nvim" },
-  { 'nyoom-engineering/oxocarbon.nvim' },
 
   -- quarto for python
   {
