@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -253,6 +253,8 @@ require('lazy').setup({
 
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
+  { "EdenEast/nightfox.nvim" },
+  { 'nyoom-engineering/oxocarbon.nvim' },
 
   -- quarto for python
   {
@@ -263,20 +265,6 @@ require('lazy').setup({
       deps = {},
     },
   },
-
-  -- {
-  --   'jackMort/ChatGPT.nvim',
-  --   event = 'VeryLazy',
-  --   config = function()
-  --     require('chatgpt').setup()
-  --   end,
-  --   dependencies = {
-  --     'MunifTanjim/nui.nvim',
-  --     'nvim-lua/plenary.nvim',
-  --     'folke/trouble.nvim',
-  --     'nvim-telescope/telescope.nvim',
-  --   },
-  -- },
 
   -- dap helpers
   {
